@@ -79,11 +79,12 @@ runs:
         if [[ -d .git ]]; then
             # if remote is not current repo remove .git
             $GIT remote -v | grep "${REPOSITORY}" || rm -rf ./.git
+            $GIT remote remove origin
+            $GIT clean -ffdx
+            git reset --hard HEAD
         fi
 
-        if [[ -d .git ]]; then
-            $GIT remote remove origin
-        else
+        if [[ ! -d .git ]]; then
             $GIT init
         fi
 
