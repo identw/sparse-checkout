@@ -75,6 +75,11 @@ runs:
     - name: Initializing the repository
       run: |
         echo "::group::Initializing the repository"
+        # check exit init repo
+        if [[ -d .git ]]; then
+            # if remote is not current repo remove .git
+            $GIT remote -v | grep "${REPOSITORY}" || rm -rf ./.git
+        fi
         $GIT init
         $GIT remote add origin ${GITHUB_SERVER_URL/https:\/\//https:\/\/x-access-token:${TOKEN}@}/${REPOSITORY}
         #$GIT remote add origin ${GITHUB_SERVER_URL}/${REPOSITORY}
