@@ -75,11 +75,9 @@ runs:
     - name: Initializing the repository
       run: |
         echo "::group::Initializing the repository"
-        ls -la
         # check exit init repo
         if [[ -d .git ]]; then
             # if remote is not current repo remove .git
-            echo "########## exist .git #############3"
             $GIT remote -v | grep "${REPOSITORY}" || rm -rf ./.git
         fi
 
@@ -87,6 +85,7 @@ runs:
             $GIT init
         fi
 
+        $GIT remote remove origin
         $GIT remote add origin ${GITHUB_SERVER_URL/https:\/\//https:\/\/x-access-token:${TOKEN}@}/${REPOSITORY}
         #$GIT remote add origin ${GITHUB_SERVER_URL}/${REPOSITORY}
 
