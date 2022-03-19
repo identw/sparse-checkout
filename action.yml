@@ -81,11 +81,12 @@ runs:
             $GIT remote -v | grep "${REPOSITORY}" || rm -rf ./.git
         fi
 
-        if [[ ! -d .git ]]; then
+        if [[ -d .git ]]; then
+            $GIT remote remove origin
+        else
             $GIT init
         fi
 
-        $GIT remote remove origin
         $GIT remote add origin ${GITHUB_SERVER_URL/https:\/\//https:\/\/x-access-token:${TOKEN}@}/${REPOSITORY}
         #$GIT remote add origin ${GITHUB_SERVER_URL}/${REPOSITORY}
 
