@@ -80,8 +80,9 @@ runs:
             # if remote is not current repo remove .git
             $GIT remote -v | grep "${REPOSITORY}" || rm -rf ./.git
             $GIT remote remove origin
-            $GIT clean -ffdx
-            git reset --hard HEAD
+            $GIT clean -f -d
+            $GIT checkout .
+            $GIT status
         fi
 
         if [[ ! -d .git ]]; then
